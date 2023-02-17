@@ -1,0 +1,384 @@
+print("<<<--^-->>> Welcome to the Gaming World <<<--^-->>>\n")
+def main1():
+    import random
+    print("Choose What you want to play :---\n" + "Press (1) for -Rock Paper Scissor\nPress (2) for -Hangman(word guess)\nPress (3) for -Snake Water Gun\nPress (4) for -Guess the Number\nPress (0) for -EXIT\nYour Choice :--- ")
+    choice = int(input())
+    if choice not in range(0,5):
+        print("***Invalid Input***\nChoose Again :---")
+        main1()
+    elif choice==0:
+        print("Thanks for playing\nHave a good day :-)")
+    elif choice==1:
+        def compWin(comp_score, random3, my_score, a2, name):
+            comp_score = comp_score + 1
+            if a2 == "r":
+                a1 = "Rock"
+            elif a2 == "p":
+                a1 = "Paper"
+            else:
+                a1 = "Scissor"
+            if random3 == "r":
+                random2 = "Rock"
+            elif random3 == "p":
+                random2 = "Paper"
+            else:
+                random2 = "Scissor"
+
+            print("your guess is: "+a1+" ,and computer guess is: "+random2)
+            print("computer wins")
+            print(f"POINTS:-  computer: {comp_score}\t{name}: {my_score}")
+
+        def youWin(comp_score, random3, my_score, a2, name):
+            my_score = my_score + 1
+            if a2 == "r":
+                a1 = "Rock"
+            elif a2 == "p":
+                a1 = "Paper"
+            else:
+                a1 = "Scissor"
+            if random3 == "r":
+                random2 = "Rock"
+            elif random3 == "p":
+                random2 = "Paper"
+            else:
+                random2 = "Scissor"
+            print("your guess is: "+ a1 +" ,and computer guess is: "+random2)
+            print("you win ")
+            print(f"POINTS:-  computer: {comp_score}\t{name}: {my_score}")
+
+
+        print("Let the game begin...")
+
+        list1 = ["r", "s", "p"]
+        name = str(input("Enter Your name : "))
+        print("\nWelcome "+name+"\nLet's Play Rock, Paper, Scissor...\n")
+        chance = 7
+        n = 0
+        computer_score = 0
+        my_score = 0
+        while n < chance:
+            a = input("Choose : \nRock     [Press (r)] \nPaper    [Press (p)] \nScissor  [Press (s)] \nEnter choice:---")
+            random1 = random.choice(list1)
+            if random1 == a:
+                if a == "r":
+                    a1 = "Rock"
+                elif a == "p":
+                    a1 = "Paper"
+                else:
+                    a1 = "Scissor"
+                if random1 == "r":
+                    random2 = "Rock"
+                elif random1 == "p":
+                    random2 = "Paper"
+                else:
+                    random2 = "Scissor"
+                print("your guess is: " + a1 + " ,and computer guess is: " + random2)
+                print("It's a Tie ")
+                print(f"computer_score is {computer_score},and your score is {my_score}")
+
+            elif a == "r" and random1 == "p":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            elif a == "s" and random1 == "p":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "p" and random1 == "r":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "p" and random1 == "s":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            elif a == "r" and random1 == "s":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "s" and random1 == "r":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            else:
+                print("invalid input")
+            n = n + 1
+            print(f"{chance - n} chances is left out of {chance}")
+            random1 = ""
+        print("game over")
+
+    # From here the Hangman code Begins
+    elif choice == 2:
+        import random
+        import time
+
+        # Initial Steps to invite in the game:
+        print("\nWelcome to Hangman game\n")
+        name = input("Enter your name: ")
+        print("Hello " + name + "! Best of Luck!")
+        time.sleep(2)
+        print("The game is about to start!\n Let's play Hangman!")
+        time.sleep(3)
+
+        # The parameters we require to execute the game:
+        def main():
+            global count
+            global display
+            global word
+            global already_guessed
+            global length
+            global play_game
+            words_to_guess = ["january", "border", "image", "film", "promise", "kids", "lungs", "doll", "rhyme",
+                              "damage"
+                , "plants", "lovely", "welcome", "thanks"]
+            word = random.choice(words_to_guess)
+            length = len(word)
+            count = 0
+            display = '_' * length
+            already_guessed = []
+            play_game = ""
+
+        # A loop to re-execute the game when the first round ends:
+
+        def play_loop():
+            global play_game
+            play_game = input("Do You want to play again? y = yes, n = no \n")
+            while play_game not in ["y", "n", "Y", "N"]:
+                play_game = input("Do You want to play again? y = yes, n = no \n")
+            if play_game == "y":
+                main()
+            elif play_game == "n":
+                print("Thanks For Playing! We expect you back again!")
+                exit()
+
+        # Initializing all the conditions required for the game:
+        def hangman():
+            global count
+            global display
+            global word
+            global already_guessed
+            global play_game
+            limit = 5
+            guess = input("This is the Hangman Word: " + display + " Enter your guess: \n")
+            guess = guess.strip()
+            if len(guess) == 0 or len(guess) >= 2 or guess <= "9":
+                print("Invalid Input, Try a letter\n")
+                hangman()
+
+
+            elif guess in word:
+                already_guessed.extend([guess])
+                index = word.find(guess)
+                word = word[:index] + "_" + word[index + 1:]
+                display = display[:index] + guess + display[index + 1:]
+                print(display + "\n")
+
+            elif guess in already_guessed:
+                print("Try another letter.\n")
+
+            else:
+                count += 1
+
+                if count == 1:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+
+                elif count == 2:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+
+                elif count == 3:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+
+                elif count == 4:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |     O \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - count) + " last guess remaining\n")
+
+                elif count == 5:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |     O \n"
+                          "  |    /|\ \n"
+                          "  |    / \ \n"
+                          "__|__\n")
+                    print("Wrong guess. You are hanged!!!\n")
+                    print("The word was:", already_guessed, word)
+                    play_loop()
+
+            if word == '_' * length:
+                print("Congrats! You have guessed the word correctly!")
+                play_loop()
+
+            elif count != limit:
+                hangman()
+
+        main()
+        hangman()
+
+    # From here the Snake water Gun's code begins
+    elif choice == 3:
+        def compWin(comp_score, random3, my_score, a2, name):
+            comp_score = comp_score + 1
+            if a2 == "s":
+                a1 = "Snake"
+            elif a2 == "g":
+                a1 = "Gun"
+            else:
+                a1 = "Water"
+            if random3 == "s":
+                random2 = "Snake"
+            elif random3 == "g":
+                random2 = "Gun"
+            else:
+                random2 = "Water"
+
+            print("your guess is: " + a1 + " ,and computer guess is: " + random2)
+            print("computer wins")
+            print(f"POINTS:-  computer: {comp_score}\t{name}: {my_score}")
+
+        def youWin(comp_score, random3, my_score, a2, name):
+            my_score = my_score + 1
+            if a2 == "s":
+                a1 = "Snake"
+            elif a2 == "g":
+                a1 = "Gun"
+            else:
+                a1 = "Water"
+            if random3 == "s":
+                random2 = "Snake"
+            elif random3 == "g":
+                random2 = "Gun"
+            else:
+                random2 = "Water"
+            print("your guess is: " + a1 + " ,and computer guess is: " + random2)
+            print("you win ")
+            print(f"POINTS:-  computer: {comp_score}\t{name}: {my_score}")
+
+        print("Let the game begin...")
+
+        list1 = ["s", "w", "g"]
+        name = str(input("Enter Your name : "))
+        print("\nWelcome " + name + "\nLet's Play Snake, Gun, Water...\n")
+        chance = 7
+        n = 0
+        computer_score = 0
+        my_score = 0
+        while n < chance:
+            a = input("Choose : \nSnake  [Press (s)] \nGun    [Press (g)] \nWater  [Press (w)] \nEnter choice:---")
+            random1 = random.choice(list1)
+            if random1 == a:
+                if a == "s":
+                    a1 = "Snake"
+                elif a == "g":
+                    a1 = "Gun"
+                else:
+                    a1 = "Water"
+                if random1 == "s":
+                    random2 = "Snake"
+                elif random1 == "g":
+                    random2 = "Gun"
+                else:
+                    random2 = "Water"
+                print("your guess is: " + a1 + " ,and computer guess is: " + random2)
+                print("It's a Tie ")
+                print(f"computer_score is {computer_score},and your score is {my_score}")
+
+            elif a == "s" and random1 == "g":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            elif a == "w" and random1 == "g":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "g" and random1 == "s":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "g" and random1 == "w":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            elif a == "s" and random1 == "w":
+                youWin(computer_score, random1, my_score, a, name)
+                my_score = my_score + 1
+            elif a == "w" and random1 == "s":
+                compWin(computer_score, random1, my_score, a, name)
+                computer_score = computer_score + 1
+            else:
+                print("invalid input")
+            n = n + 1
+            print(f"{chance - n} chances is left out of {chance}")
+            random1 = ""
+        print("game over")
+
+    # From here the Guess the no. game's code begins
+    elif choice == 4:
+        attempts = 1
+        import random
+
+        n = random.randint(0, 1000)
+        print("***Welcome To The Guess The number Game***")
+        print("Enter the difficulty level : \nPress (e) for EASY\nPress (h) for HARD\nPress (x) for EXTREME.")
+        lvl = input()
+        if lvl == "e":
+            i = 16
+        elif lvl == "h":
+            i = 10
+        elif lvl == "x":
+            i = 7
+        else:
+            print("invalid input")
+            exit()
+        # here the game is starting
+        print("There guessing number lies between (0-999)--->start your guessing\n")
+        print("\nyou have total of ({}) chances to guess the number : ".format(i))
+        while i >= 0:
+            if i == 0:
+                print("You lost all the chances here...")
+                print("\nSad! to tell you, but THE GAME IS OVER now")
+                print("The number was : {}".format(n))
+                break
+            else:
+                print("Trials Remaining ({})\nENTER : ".format(i), end=" ")
+                m = int(input())
+                if m == n:
+                    print("Congo! You've won the Game ")
+                    print("Total guessing attempts taken : ({})".format(attempts))
+                    break
+                elif m > n:
+                    print("ohh! Lost a chance, try with smaller one.")
+                    # print("total guessing attempts : ({})".format(i-1))
+                elif m < n:
+                    print("ohh! Lost a chance,try with greater one.")
+                    # print("total guessing attempts : ({})".format(i-1))
+                i = i - 1
+                attempts += 1
+main1()
+# CODE ENDS
